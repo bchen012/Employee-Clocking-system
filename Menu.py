@@ -25,6 +25,7 @@ def create_attendance_record():
         csv_pointer.writerow(row)
         print("Done")
 
+
 # step 2
 # allow employees to clock in their timing and temperature when they reach the workplace
 def clock_in(): 
