@@ -2,12 +2,11 @@ import pandas as pd
 import json
 from datetime import datetime, date, time, timedelta
 
-#df.loc[df['column_name'] == some_value]
 
 class EmployeeMgr:
     def __init__(self):
         self.employees = pd.read_csv('employee_data.csv')       #loads all the employee data into system
-        print(self.employees)
+        # print(self.employees)
 
         self.attendanceData = {}
         with open('attendance.txt','r') as inf:
@@ -15,20 +14,25 @@ class EmployeeMgr:
 
 
     def check_employee_id(self, id):    #returns true if employee id exists and false if not
-        if len(self.employees.loc[self.employees['Employee ID'] == id])>0:
+        if len(self.employees.loc[self.employees['Employee ID'] == id].values)>0:
             return True
         return False
 
 
     def get_employee_name(self, id):
-        employeeRows = self.employees.loc[self.employees['Employee ID'] == id]
-        return employeeRows['Employee Name'][0]
+        employeeName = self.employees.loc[self.employees['Employee ID'] == id, 'Employee Name'].values[0]
+        return employeeName
 
 
     def clock_in_employee(self, id): 
-        row = self.employees.loc[self.employees['Employee ID'] == id]
-        if row['Clocked In'][0] == 'yes':
+        clockedIn = self.employees.loc[self.employees['Employee ID'] == id, 'Clocked In'].values[0]
+        if clockedIn == 'yes':
             print("Employee already clocked in.")
+            return
+
+        temperature = float(input("Please enter your temperature: "))
+        if temperature > 37.5: 
+            print("Entry denied. You are having a fever, please go and see a doctor! ")
             return
 
         self.employees.loc[self.employees['Employee ID'] == id, 'Clocked In'] = 'yes'    #update employees clock in status
@@ -37,12 +41,34 @@ class EmployeeMgr:
         date_now = current.strftime("%d/%m/%y")
         time_now = current.strftime("%H:%M")
 
-        if id not in self.attendanceData:
+        if id not in self.attendanceData:       #update the attendance data
             self.attendanceData[id] = [date_now + ' ' + time_now]
         else:
-            self.attendanceData[id].append([date_now + ' ' + time_now])
+            self.attendanceData[id].append(date_now + ' ' + time_now)
         
-        print(date_now, time_now)
+        employeeName = self.get_employee_name(id)
+        print(employeeName, "clocked in. Date: " + date_now + "  time: " + time_now)
+
+
+    def clock_out_employee(self, id):
+        clockedIn = self.employees.loc[self.employees['Employee ID'] == id, 'Clocked In'].values[0]
+        if clockedIn == 'no':
+            print("Employee is not clocked in.")
+            return
+
+        self.employees.loc[self.employees['Employee ID'] == id, 'Clocked In'] = 'no'    #update employees clock in status
+
+        current = datetime.now()
+        date_now = current.strftime("%d/%m/%y")
+        time_now = current.strftime("%H:%M")
+
+        if id not in self.attendanceData:       #update the attendance data
+            self.attendanceData[id] = [date_now + ' ' + time_now]
+        else:
+            self.attendanceData[id].append(date_now + ' ' + time_now)
+        
+        employeeName = self.get_employee_name(id)
+        print(employeeName, "clocked out. Date: " + date_now + "  time: " + time_now)
 
 
     def register_employee(self, name, id):
@@ -53,10 +79,11 @@ class EmployeeMgr:
         print(name + " (" + id + ") has been added as a new employee. Welcome!")
 
 
-    def save_date_to_files(self):
+    def save_data_to_files(self):
         f = open("attendance.txt","w")
         f.write( str(self.attendanceData) )
         f.close()
         self.employees.to_csv("employee_data.csv", index=False)
 
         
+    
