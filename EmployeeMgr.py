@@ -22,9 +22,13 @@ class EmployeeMgr:
     def get_employee_name(self, id):
         employeeName = self.employees.loc[self.employees['Employee ID'] == id, 'Employee Name'].values[0]
         return employeeName
+    
+
+    def get_employee_attendance_data(self, id):
+        return self.attendanceData[id]
 
 
-    def clock_in_employee(self, id): 
+    def clock_in_employee(self, id):
         clockedIn = self.employees.loc[self.employees['Employee ID'] == id, 'Clocked In'].values[0]
         if clockedIn == 'yes':
             print("Employee already clocked in.")
@@ -37,17 +41,23 @@ class EmployeeMgr:
 
         self.employees.loc[self.employees['Employee ID'] == id, 'Clocked In'] = 'yes'    #update employees clock in status
 
-        current = datetime.now()
-        date_now = current.strftime("%d/%m/%y")
-        time_now = current.strftime("%H:%M")
+        # current = datetime.now()
+        #current.strftime("%d/%m/%y")
+        #current.strftime("%H:%M")
+        month = input("Enter current month: ") 
+        date = input("Enter current date: ")
+        clockInTime = input("Enter current time (Example - 1730): ")
+
+        clockInDate = "2021/" + month + "/" + date
+        
 
         if id not in self.attendanceData:       #update the attendance data
-            self.attendanceData[id] = [date_now + ' ' + time_now]
+            self.attendanceData[id] = [clockInDate + ' ' + clockInTime]
         else:
-            self.attendanceData[id].append(date_now + ' ' + time_now)
+            self.attendanceData[id].append(clockInDate + ' ' + clockInTime)
         
         employeeName = self.get_employee_name(id)
-        print(employeeName, "clocked in. Date: " + date_now + "  time: " + time_now)
+        print(employeeName, "clocked in. Date: " + clockInDate + "  time: " + clockInTime)
 
 
     def clock_out_employee(self, id):
@@ -58,17 +68,22 @@ class EmployeeMgr:
 
         self.employees.loc[self.employees['Employee ID'] == id, 'Clocked In'] = 'no'    #update employees clock in status
 
-        current = datetime.now()
-        date_now = current.strftime("%d/%m/%y")
-        time_now = current.strftime("%H:%M")
+        # current = datetime.now()
+        # date_now = current.strftime("%d/%m/%y")
+        # time_now = current.strftime("%H:%M")
+
+        month = input("Enter current month: ") 
+        date = input("Enter current date: ")
+        clockOutTime = input("Enter current time (Example - 1730): ")
+        clockOutDate = "2021/" + month + "/" + date
 
         if id not in self.attendanceData:       #update the attendance data
-            self.attendanceData[id] = [date_now + ' ' + time_now]
+            self.attendanceData[id] = [clockOutDate + ' ' + clockOutTime]
         else:
-            self.attendanceData[id].append(date_now + ' ' + time_now)
+            self.attendanceData[id].append(clockOutDate + ' ' + clockOutTime)
         
         employeeName = self.get_employee_name(id)
-        print(employeeName, "clocked out. Date: " + date_now + "  time: " + time_now)
+        print(employeeName, "clocked out. Date: " + clockOutDate + "  time: " + clockOutTime)
 
 
     def register_employee(self, name, id):
