@@ -1,3 +1,12 @@
+Instructions for running the code:
+1. run the following in command line: pip install pandas
+2. open project in your IDE (e.g Spyder, Visual studio code, or pycharm)
+3. run the main.py file
+
+
+
+
+
 Objective: Create an attendance and claims system for the HR department to achieve the following aims:
 	•	Track employee’s working hours (aim: make it easier for HR to calculate payroll)
 	•	Track which employee arrived late to work (aim: make it easier for HR to deduct late employees’ pay from payroll)

@@ -130,7 +130,7 @@ elif choice == "1":
 elif choice == "2":
         print(clock_out)
         
-elif choice == "3": # problem: daily attendance record is not created yet as we encountered initial problems with our clock out function
+# elif choice == "3": # problem: daily attendance record is not created yet as we encountered initial problems with our clock out function
 
 elif choice == "4":
     meal_claim = 0
@@ -149,39 +149,39 @@ elif choice == "4":
     import csv
 
     employee_id_check = input("Hello, please enter your employee ID: ")
-        for each in employee_id:
-            if employee_id_check == each:
-                print("hello, ", employee_id_and_name[employee_id_check])
-                menu2 = '''
-                1. Meal
-                2. Transport
-                X. Exit
-                '''
-                while True:
-                    print(menu2)
-                    try:
-                        choice_claim = input("Please select an option: ").upper()
-                        if choice_claim == 'X':
-                            break
-                        elif choice_claim == '1':
-                            meal_claim += 7
-                            print("Total claimable amount for meals: $", meal_claim) 
-                        elif choice_claim == '2':
-                            transport_claim = input("Please input the amount you wish to claim for transportation: $")
-                            print("Total claimable amount for transportion: $",transport_claim)
-                        else:
-                            print("Invalid selection") 
-                        
-                        Z = int(transport_claim) + int(meal_claim)
-                        with open(filename, 'a', newline = "") as file_pointer:
-                            csv_pointer = csv.writer(file_pointer)
-                            row = [employee_id_check, employee_id_and_name[employee_id_check], meal_claim, transport_claim]
-                            csv_pointer.writerow(row)
-                            print("The total amount you wish to claim is: $", Z)
-                            print("We have received your request and will be processing it shortly. Do also kindly submit your transportation receipts to the Finance Department for audit purposes. Thank you")
+    for each in employee_id:
+        if employee_id_check == each:
+            print("hello, ", employee_id_and_name[employee_id_check])
+            menu2 = '''
+            1. Meal
+            2. Transport
+            X. Exit
+            '''
+            while True:
+                print(menu2)
+                try:
+                    choice_claim = input("Please select an option: ").upper()
+                    if choice_claim == 'X':
+                        break
+                    elif choice_claim == '1':
+                        meal_claim += 7
+                        print("Total claimable amount for meals: $", meal_claim) 
+                    elif choice_claim == '2':
+                        transport_claim = input("Please input the amount you wish to claim for transportation: $")
+                        print("Total claimable amount for transportion: $",transport_claim)
+                    else:
+                        print("Invalid selection") 
                     
-                    except ValueError:
-                        print("Invalid selection")
+                    Z = int(transport_claim) + int(meal_claim)
+                    with open(filename, 'a', newline = "") as file_pointer:
+                        csv_pointer = csv.writer(file_pointer)
+                        row = [employee_id_check, employee_id_and_name[employee_id_check], meal_claim, transport_claim]
+                        csv_pointer.writerow(row)
+                        print("The total amount you wish to claim is: $", Z)
+                        print("We have received your request and will be processing it shortly. Do also kindly submit your transportation receipts to the Finance Department for audit purposes. Thank you")
+                
+                except ValueError:
+                    print("Invalid selection")
             
                 
                 

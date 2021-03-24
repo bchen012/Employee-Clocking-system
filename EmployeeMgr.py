@@ -58,6 +58,8 @@ class EmployeeMgr:
         
         employeeName = self.get_employee_name(id)
         print(employeeName, "clocked in. Date: " + clockInDate + "  time: " + clockInTime)
+        if int(clockInTime) > 900:
+            print("You are late! \n")
 
 
     def clock_out_employee(self, id):
