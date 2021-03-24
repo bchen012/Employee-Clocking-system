@@ -50,11 +50,17 @@ def print_Attendance(attendanceList):
                 clockedIn = False
                 sinceLastClockIn = get_time_difference(PrevClockOutTime, clockInTime)
                 for j in range(sinceLastClockIn):
-                    scheduleToPrint += ' '
+                    if len(scheduleToPrint) >= 36:
+                        scheduleToPrint += 'X'      #print late indicator
+                    else:
+                        scheduleToPrint += ' '
 
                 workDuration = get_time_difference(clockInTime, time)
                 for j in range(workDuration):
-                    scheduleToPrint += 'O'
+                    if len(scheduleToPrint) >= 68:
+                        scheduleToPrint += 'T'
+                    else:
+                        scheduleToPrint += 'O'
                 
                 PrevClockOutTime = time
                 
@@ -71,3 +77,4 @@ def print_Attendance(attendanceList):
         print("|")
 
     print('')
+    print("Legend: \nO - Clocked in \nX - Late \nT - Overtime \n\n")

@@ -22,7 +22,13 @@ class EmployeeMgr:
     def get_employee_name(self, id):
         employeeName = self.employees.loc[self.employees['Employee ID'] == id, 'Employee Name'].values[0]
         return employeeName
-    
+
+
+    def update_employee_name(self, id):
+        print("Current name is " + self.get_employee_name(id) + ".")
+        newName = input("Please enter your new name: ")
+        self.employees.loc[self.employees['Employee ID'] == id, 'Employee Name'] = newName
+        print("Name has been updated to " + newName)
 
     def get_employee_attendance_data(self, id):
         return self.attendanceData[id]
@@ -86,6 +92,21 @@ class EmployeeMgr:
         
         employeeName = self.get_employee_name(id)
         print(employeeName, "clocked out. Date: " + clockOutDate + "  time: " + clockOutTime)
+        if int(clockOutTime) > 1700:
+            self.employees.loc[self.employees['Employee ID'] == id, 'Claim'] = clockOutDate
+
+
+    def apply_claim(self, id):
+        if self.employees.loc[self.employees['Employee ID'] == id, 'Claim'].values[0] != "None":
+            claimAmount = input("Please enter the amount you would like to claim: ")
+            reply = input("Are you sure that you want to submit $" + claimAmount + " for transport claim? (Y/N)")
+            if reply == 'Y':
+                print("Your claim for $" + claimAmount + " has been submitted. Please pass your receipts to the HR dept for further processing.")
+                self.employees.loc[self.employees['Employee ID'] == id, 'Claim'] = "None"
+            else:
+                print("Claim application abortted.")
+        else:
+            print("You have no claims available.")
 
 
     def register_employee(self, name, id):

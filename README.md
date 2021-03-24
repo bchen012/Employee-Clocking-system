@@ -4,6 +4,10 @@ Instructions for running the code:
 3. run the main.py file
 
 
+TODO:
+Add option to update particulars (DONE)
+Implement the claims feauture
+Attendance Record: Add legend: O for here, X for late, T for OT. Every unit is 15 minutes. (DONE)
 
 
 
@@ -38,7 +42,9 @@ Option 2: Clock Out - Employees will be asked to log in + record current date an
 
 Option 3: Daily Attendance Record - For HR to see at a glance who is late, working OT, or absent on which date or day.
 
-Option 4: Claims Application - Employees who timed out after 6pm will be entitled to meal claim (fixed $7) and transport claims (Variable - up to employee to input). Employees who timed out before or at 6pm will not be entitled to submit any claims. 
+Option 4: Claims Application - Employees who timed out after 6pm will be entitled to meal claim (fixed $7) and transport claims (Variable - up to employee to input). Employees who timed out before or at 6pm will not be entitled to submit any claims. If not claimed on that day, it will no longer be available the next day.
+
+After 9.30pm eligable for Transport as additional to meal claim
 
 Note: Claims and Daily Attendance Record should link together - e.g. if the employee makes a claim on 29th March, then his clock out hours should be after 6pm. Otherwise, the claim is a fraud. 
 
