@@ -7,6 +7,7 @@ class EmployeeMgr:
     def __init__(self):
         self.employees = pd.read_csv('employee_data.csv')       #loads all the employee data into system
         # print(self.employees)
+        self.attendance_and_claims_data = pd.read_csv('attendance_and_claims.csv')
 
         self.attendanceData = {}
         with open('attendance.txt','r') as inf:
@@ -61,6 +62,11 @@ class EmployeeMgr:
             self.attendanceData[id] = [clockInDate + ' ' + clockInTime]
         else:
             self.attendanceData[id].append(clockInDate + ' ' + clockInTime)
+
+        clockInRecord = self.attendance_and_claims_data.loc[self.attendance_and_claims_data['Employee ID'] == id, 'Clock In Record'].values[0]
+        print(clockInRecord)
+        # clockInRecord = clockInRecord + clockInDate + ' ' + clockInTime + ','
+        self.attendance_and_claims_data.loc[self.attendance_and_claims_data['Employee ID'] == id, 'Clock In Record'] = clockInRecord
         
         employeeName = self.get_employee_name(id)
         print(employeeName, "clocked in. Date: " + clockInDate + "  time: " + clockInTime)
@@ -89,6 +95,10 @@ class EmployeeMgr:
             self.attendanceData[id] = [clockOutDate + ' ' + clockOutTime]
         else:
             self.attendanceData[id].append(clockOutDate + ' ' + clockOutTime)
+
+        clockOutRecord = self.attendance_and_claims_data.loc[self.attendance_and_claims_data['Employee ID'] == id, 'Clock Out Record'].values[0]
+        clockOutRecord = clockInRecord + clockOutDate + ' ' + clockOutTime + ','
+        self.attendance_and_claims_data.loc[self.attendance_and_claims_data['Employee ID'] == id, 'Clock Out Record'] = clockOutRecord
         
         employeeName = self.get_employee_name(id)
         print(employeeName, "clocked out. Date: " + clockOutDate + "  time: " + clockOutTime)
@@ -110,10 +120,13 @@ class EmployeeMgr:
 
 
     def register_employee(self, name, id):
-        values_to_add = pd.DataFrame({'Employee ID': [id], 'Employee Name': [name], 'Clocked In': ["no"]})
-        print(values_to_add)
+        values_to_add = pd.DataFrame({'Employee ID': [id], 'Employee Name': [name], 'Clocked In': ["no"], 'Claim': ['None']})
+        # print(values_to_add)
         self.employees = self.employees.append(values_to_add, ignore_index = True)
-        print(self.employees)
+
+        values_to_add = pd.DataFrame({'Employee ID': [id],'Clock In Record': [''],'Clock Out Record': [''],'Claims Record':['']})
+        self.attendance_and_claims_data = self.attendance_and_claims_data.append(values_to_add, ignore_index = True)
+        # print(self.employees)
         print(name + " (" + id + ") has been added as a new employee. Welcome!")
 
 
@@ -122,6 +135,7 @@ class EmployeeMgr:
         f.write( str(self.attendanceData) )
         f.close()
         self.employees.to_csv("employee_data.csv", index=False)
+        self.attendance_and_claims_data.to_csv("attendance_and_claims.csv", index=False)
 
         
     
