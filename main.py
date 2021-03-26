@@ -30,7 +30,7 @@ while choice1 <= 2:
     
     elif choice1 == 2:
         newEmployeeName = input("Enter an name: ")
-        newEmployeeID = input("Enter an ID: ")
+        newEmployeeID = int(input("Enter an ID: "))
         employeeMgr.register_employee(newEmployeeName, newEmployeeID)
 
     choice1 = int(input("Please choose an option: \n1. Login \n2. Register \n3. Exit\n"))
