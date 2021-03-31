@@ -22,20 +22,20 @@ def get_time_difference(time1, time2):
 
 
 def print_Attendance(attendanceList):
-    print("Date    |Day|0000|0100|0200|0300|0400|0500|0600|0700|0800|0900|1000|1100|1200|1300|1400|1500|1600|1700|1800|1900|2000|2100|2200|2300|")
+    print("Date    |Day|0800|0900|1000|1100|1200|1300|1400|1500|1600|1700|1800|1900|2000|2100|2200|2300|")
     dates = []
     times = []
     for i in attendanceList:
         dateTime = i.split(' ')
         dateData = dateTime[0].split('/')
-        date = datetime.date(int(dateData[0]), int(dateData[1]), int(dateData[2]))
+        date = datetime.date(int(dateData[2]), int(dateData[1]), int(dateData[0]))
         dates.append(date)
         times.append(dateTime[1])
     
     i = 0
     clockedIn = False
     clockInTime = '0000'
-    PrevClockOutTime = '0000'
+    PrevClockOutTime = '0800'
 
     while i < len(dates):
         currentDate = dates[i]
@@ -50,14 +50,14 @@ def print_Attendance(attendanceList):
                 clockedIn = False
                 sinceLastClockIn = get_time_difference(PrevClockOutTime, clockInTime)
                 for j in range(sinceLastClockIn):
-                    if len(scheduleToPrint) >= 36:
+                    if len(scheduleToPrint)>=4:
                         scheduleToPrint += 'X'      #print late indicator
                     else:
                         scheduleToPrint += ' '
 
                 workDuration = get_time_difference(clockInTime, time)
                 for j in range(workDuration):
-                    if len(scheduleToPrint) >= 68:
+                    if len(scheduleToPrint) >= 40:
                         scheduleToPrint += 'T'
                     else:
                         scheduleToPrint += 'O'
@@ -65,7 +65,7 @@ def print_Attendance(attendanceList):
                 PrevClockOutTime = time
                 
             i+=1
-        for j in range(len(scheduleToPrint), 96):
+        for j in range(len(scheduleToPrint), 64):
             scheduleToPrint += ' '
         index = 0
         for j in scheduleToPrint:
@@ -73,7 +73,7 @@ def print_Attendance(attendanceList):
                 print('|', end='')
             print(j, end='')
             index += 1
-        PrevClockOutTime = '0000'
+        PrevClockOutTime = '0800'
         print("|")
 
     print('')

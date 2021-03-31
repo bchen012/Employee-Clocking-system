@@ -5,9 +5,7 @@ Instructions for running the code:
 
 
 TODO:
-Add option to update particulars (DONE)
-Implement the claims feauture
-Attendance Record: Add legend: O for here, X for late, T for OT. Every unit is 15 minutes. (DONE)
+-remove 0000 to 0700 in the attendance record
 
 
 
