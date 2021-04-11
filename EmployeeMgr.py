@@ -50,14 +50,9 @@ class EmployeeMgr:
 
         self.employees.loc[self.employees['Employee ID'] == id, 'Clocked In'] = 'yes'    #update employees clock in status
 
-        #current = datetime.now()
-        #current.strftime("%d/%m/%y")
-        #current.strftime("%H:%M")
-        month = get_input_range("Enter current month: ", "Invalid value, please enter a valid input. \n", 1, 12)
-        date = get_input_range("Enter current date: ", "Invalid value, please enter a valid input. \n", 1, 31)
-        clockInTime = input("Enter current time (Example - 1730): ")
-
-        clockInDate = str(date) + "/" + str(month) + "/2021"
+        current = datetime.now()
+        clockInDate = current.strftime("%d/%m/%y")
+        clockInTime = current.strftime("%H%M")
 
         clockInRecord = self.attendance_and_claims_data.loc[self.attendance_and_claims_data['Employee ID'] == id, 'Clock In Record'].values[0]
         if clockInRecord == 'None':
@@ -80,15 +75,15 @@ class EmployeeMgr:
 
         self.employees.loc[self.employees['Employee ID'] == id, 'Clocked In'] = 'no'    #update employees clock in status
 
-        # current = datetime.now()
-        # clockOutDate = current.strftime("%d/%m/%y")
-        # clockOutTime = current.strftime("%H%M")
+        current = datetime.now()
+        clockOutDate = current.strftime("%d/%m/%y")
+        clockOutTime = current.strftime("%H%M")
         # print("TESTING: ",clockOutDate, clockOutTime)
 
-        month = get_input_range("Enter current month: ", "Invalid value, please enter a valid input. \n", 1, 12)
-        date = get_input_range("Enter current date: ", "Invalid value, please enter a valid input. \n", 1, 31)
-        clockOutTime = input("Enter current time (Example - 1730): ")
-        clockOutDate = str(date) + "/" + str(month) + "/2021"
+        #month = get_input_range("Enter current month: ", "Invalid value, please enter a valid input. \n", 1, 12)
+        #date = get_input_range("Enter current date: ", "Invalid value, please enter a valid input. \n", 1, 31)
+        #clockOutTime = input("Enter current time (Example - 1730): ")
+        #clockOutDate = str(date) + "/" + str(month) + "/2021"
 
         clockOutRecord = self.attendance_and_claims_data.loc[self.attendance_and_claims_data['Employee ID'] == id, 'Clock Out Record'].values[0]
         if clockOutRecord == 'None':
