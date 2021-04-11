@@ -51,7 +51,7 @@ class EmployeeMgr:
         self.employees.loc[self.employees['Employee ID'] == id, 'Clocked In'] = 'yes'    #update employees clock in status
 
         current = datetime.now()
-        clockInDate = current.strftime("%d/%m/%y")
+        clockInDate = current.strftime("%d/%m/%Y")
         clockInTime = current.strftime("%H%M")
 
         clockInRecord = self.attendance_and_claims_data.loc[self.attendance_and_claims_data['Employee ID'] == id, 'Clock In Record'].values[0]
@@ -76,7 +76,7 @@ class EmployeeMgr:
         self.employees.loc[self.employees['Employee ID'] == id, 'Clocked In'] = 'no'    #update employees clock in status
 
         current = datetime.now()
-        clockOutDate = current.strftime("%d/%m/%y")
+        clockOutDate = current.strftime("%d/%m/%Y")
         clockOutTime = current.strftime("%H%M")
         # print("TESTING: ",clockOutDate, clockOutTime)
 
